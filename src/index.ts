@@ -12,5 +12,6 @@ export * from "./sdk/util";
 
     console.log(await sdk.filesystem.getQuota());
     console.log(await sdk.filesystem.getDirectory("./"));
+    console.log(sdk.authStore._token);
   });
 })();
