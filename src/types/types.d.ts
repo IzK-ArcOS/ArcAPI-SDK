@@ -1,28 +1,28 @@
-export interface Cred {
+interface Cred {
   username: string;
   password: string;
 }
 
-export type Params = { [key: string]: string };
+type Params = { [key: string]: string };
 
-export interface ApiError {
+interface ApiError {
   title: string;
   message: string;
 }
 
-export interface UserDirectory {
+interface UserDirectory {
   name: string;
   scopedPath: string;
   files: PartialArcFile[];
   directories: PartialUserDir[];
 }
 
-export interface PartialUserDir {
+interface PartialUserDir {
   name: string;
   scopedPath: string;
 }
 
-export interface PartialArcFile {
+interface PartialArcFile {
   size?: number;
   mime: string;
   filename: string;
@@ -31,7 +31,7 @@ export interface PartialArcFile {
   dateModified: number;
 }
 
-export interface ArcFile {
+interface ArcFile {
   name: string;
   path: string;
   data: ArrayBuffer;
@@ -39,15 +39,15 @@ export interface ArcFile {
   anymime?: boolean;
 }
 
-export interface DirReadResponse {
+interface DirReadResponse {
   valid: boolean;
   data: UserDirectory;
   error?: ApiError;
 }
 
-export type DirectoryGet = Promise<UserDirectory | false>;
+type DirectoryGet = Promise<UserDirectory | false>;
 
-export interface DefaultResponse {
+interface DefaultResponse {
   valid: boolean;
   data: any;
   error?: {
@@ -57,9 +57,11 @@ export interface DefaultResponse {
   statusCode?: number;
 }
 
-export type ApiResponse = Promise<DefaultResponse>;
+type ApiResponse = Promise<DefaultResponse>;
 
-export interface FSQuota {
+type UrlParams = Record<string, any>;
+
+interface FSQuota {
   username: string;
   max: number;
   free: number;

@@ -1,12 +1,12 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { SdkExtension } from "./extension";
 import { ArcSDK } from "./main";
 
 export class ArcAuth extends SdkExtension {
   public authenticated = false;
-  public username: string;
-  private password: string;
-  private _token: string;
+  public username: Nullable<string>;
+  public password: Nullable<string>;
+  public _token: Nullable<string>;
 
   constructor(sdk: ArcSDK) {
     super(sdk, "Auth");
@@ -22,12 +22,12 @@ export class ArcAuth extends SdkExtension {
       return this.Error(`No SDK to use. Is this class initialized properly?`);
 
     try {
-      const response = await axios.post(
-        this.sdk._url as string,
-        {},
+      const response = await axios.get(
+        this.sdk.util.getEndpointUrl(this.sdk._url as string, "auth") as string,
         {
-          headers: {
-            Authorization: `Basic ${this.basicToken(username, password)}`,
+          auth: {
+            username,
+            password,
           },
         }
       );
@@ -39,12 +39,8 @@ export class ArcAuth extends SdkExtension {
       this.authenticated = true;
 
       return response.data.data.token;
-    } catch {
+    } catch (e) {
       return this.Error("Login failed");
     }
-  }
-
-  public basicToken(username: string, password: string) {
-    return btoa(`${username}:${password}`);
   }
 }

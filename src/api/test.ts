@@ -21,7 +21,7 @@ export async function testConnection(
     try {
       await axios.get(url, {});
 
-      return url;
+      return `${proto}://${server}:${port}/`;
     } catch {
       continue;
     }

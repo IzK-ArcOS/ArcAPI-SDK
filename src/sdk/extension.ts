@@ -12,4 +12,18 @@ export class SdkExtension {
   public Error(message: string) {
     throw `ArcSdk${this.mod}: ${message}`;
   }
+
+  public CheckAuth() {
+    if (
+      !this.sdk.authStore ||
+      !this.sdk.authStore.authenticated ||
+      !this.sdk.authStore._token
+    ) {
+      this.Error("Auth not initialized.");
+
+      return false;
+    }
+
+    return true;
+  }
 }
